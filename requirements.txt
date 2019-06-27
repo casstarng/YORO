@@ -1,3 +1,2 @@
 tensorflow==1.14.0
 opencv-python==4.1.0.25
-faced==0.1

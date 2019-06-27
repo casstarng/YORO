@@ -4,19 +4,19 @@ import logging as log
 import datetime as dt
 from time import sleep
 
-from faced import FaceDetector
-from faced.utils import annotate_image
+from Faced.detector import FaceDetector
+from Faced.utils import annotate_image
 
 def crop_images(frame, bboxes):
     image = frame[:]
-
-    crop_img = img_h, img_w = frame.shape
+    img_h, img_w, _ = frame.shape
+    cropped_images = []
 
     for x,y,w,h,p in bboxes:
-        crop_img = frame[y:y+h, x:x+w]
+        crop_img = frame[y-h:y+h, x-w:x+w].copy()
+        cropped_images.append(crop_img)
 
-    cv2.imshow("cropped", crop_img)
-    pass
+    return cropped_images
 
 def main():
     #Initialize the Facial Recognition Neural Network
@@ -39,6 +39,12 @@ def main():
         ann_img = annotate_image(frame, bboxes)
         # Display the resulting frame
         cv2.imshow('Video', ann_img)
+
+        cropped_images = crop_images(frame, bboxes)
+
+        for i, img in enumerate(cropped_images):
+            if (img.size > 0):
+                cv2.imshow('Vid' + str(i), img)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
