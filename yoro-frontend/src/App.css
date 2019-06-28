@@ -59,3 +59,10 @@
     transform: rotate(360deg);
   }
 }
+
+.makeStyles-media-58 {
+  margin-right: auto;
+  margin-left: auto;
+  height: 440px;
+  width: 300px;
+}
