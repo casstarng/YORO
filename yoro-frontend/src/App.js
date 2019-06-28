@@ -19,6 +19,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <img src={require('./image/ciscoLogo.PNG')} className="ciscoLogo" />
         <header className="App-header" />
         <div className="Body-Border">
           <div className="Media-Card">
