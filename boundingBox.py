@@ -8,6 +8,8 @@ import argparse
 import pickle
 import imutils
 import numpy as np
+import requests
+import json
 import logging as log
 import datetime as dt
 from time import sleep
@@ -17,6 +19,9 @@ from Faced.utils import annotate_image
 
 count = 0
 user = "cassidy"
+event_id = "5d1387b338fd21e#"
+url = "http://4fd2bcd1.ngrok.io/yoro/checkInUser"
+user = {"cassidy": "catarng"}
 
 def crop_images(frame, bboxes):
     global count
@@ -30,7 +35,7 @@ def crop_images(frame, bboxes):
         wei = int(w/2) + int(w/4)
         crop_img = frame[y-hei:y+hei, x-wei:x+wei].copy()
 
-        cv2.imwrite('./opencv-face-recognition/dataset/'+user+'/' + user+str(count)+".jpg", crop_img)
+        # cv2.imwrite('./opencv-face-recognition/dataset/'+user+'/' + user+str(count)+".jpg", crop_img)
         cropped_images.append((crop_img,x,y,w,h,p))
         count += 1
 
@@ -81,7 +86,6 @@ def main():
 
         #Gets the RGB numpy image and returns tuples
         bboxes = face_detector.predict(rgb_img)
-        print(bboxes)
 
         cropped_images = crop_images(frame, bboxes)
 
@@ -103,6 +107,12 @@ def main():
                 cv2.putText(frame, text, (int(x - w/2), int(y - h/2 - 10)),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
                 color = (0,255,0)
+                if (name in user):
+                    data = {"id": event_id + user[name]}
+                    print("Sent Requests: " + str(data))
+                    headers = {"Content-Type": "application/json"}
+                    r = requests.post(url=url, data=json.dumps(data), headers=headers)
+                    print(r)
 
             cv2.rectangle(frame, (int(x - w/2), int(y - h/2)),
                             (int(x + w/2), int(y + h/2)), color, 3)
