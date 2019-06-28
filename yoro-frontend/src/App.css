@@ -23,8 +23,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 5vh;
+  background-color: #065071;
+  min-height: 7vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,4 +65,21 @@
   margin-left: auto;
   height: 440px;
   width: 300px;
+}
+
+.MuiTableBody-root .MuiTableRow-root:hover td{
+  background-color: #049FD9;
+  color: white !important;
+}
+
+.MuiTableBody-root .MuiTableRow-root:hover th{
+  background-color: #049FD9;
+  color: white !important;
+}
+
+.ciscoLogo {
+  left: 15px;
+  margin-top: 5px;
+  height: 45px;
+  position: absolute;
 }
