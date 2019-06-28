@@ -1,16 +1,25 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from bson.objectid import ObjectId
+from flask_socketio import SocketIO, emit
 import pymongo
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+app.config['DEBUG'] = True
 CORS(app)
+socketio = SocketIO(app)
+
 
 client = pymongo.MongoClient("mongodb+srv://catarng:yoro@yoro-5bxmt.mongodb.net/yoro?retryWrites=true&w=majority")
 db = client.yoro
 
+
+@socketio.on('latestCheckIn', namespace='/lastCheckIn')
+def latestCheckIn():
+    print('Connected to Socked')
+
 @app.route('/yoro/checkInUser', methods=['POST'])
-def checkInuser():
+def checkInUser():
     # Check if ticket_id is present in request
     if not request.json or not 'id' in request.json:
         return jsonify({'code': 'F1',
@@ -39,11 +48,34 @@ def checkInuser():
     # Update user info
     db.user.update({'_id': request.json['id']}, {'$set': {'checked_in': 'true'}})
 
+    socketio.emit('lastCheckedInUser', user, namespace='/lastCheckIn')
+
     # Return success response
     return jsonify({'code': 'S0',
                     'response': 'Success',
                     'message': 'User has now been checked in',
                     'user_info': user}), 201
 
+@app.route('/yoro/getListOfCheckedIn', methods=['POST'])
+def getListOfCheckedIn():
+    print(str(request.json))
+    query = {
+        'event_id': request.json['id'],
+        'checked_in': 'true'
+    }
+
+    print (request.json['id'])
+
+    # Query
+    cursor = db.user.find(query)
+    results = list(cursor)
+
+
+    # Return success response
+    return jsonify({'code': 'S0',
+                    'response': 'Success',
+                    'message': 'User has now been checked in',
+                    'result': results}), 201
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)

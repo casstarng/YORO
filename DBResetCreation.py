@@ -26,8 +26,68 @@ query = {
   'last_name': 'Tarng',
   'cec_id': 'catarng',
   'registered': 'true',
-  'checked_in': 'false'
+  'checked_in': 'false',
+  'event_id': ids
 }
 db.user.insert_one(query)
 print('1 User has been created')
 
+query = {
+  '_id': ids + '#jonathat',
+  'first_name': 'Jonathan',
+  'last_name': 'Tan',
+  'cec_id': 'jonathat',
+  'registered': 'true',
+  'checked_in': 'true',
+  'event_id': ids
+}
+db.user.insert_one(query)
+print('1 User has been created')
+
+query = {
+  '_id': ids + '#jimpan',
+  'first_name': 'Jimmy',
+  'last_name': 'Pan',
+  'cec_id': 'jimpan',
+  'registered': 'true',
+  'checked_in': 'true',
+  'event_id': ids
+}
+db.user.insert_one(query)
+print('1 User has been created')
+
+query = {
+  '_id': ids + '#algarbar',
+  'first_name': 'Alex',
+  'last_name': 'Garbarini',
+  'cec_id': 'algarbar',
+  'registered': 'true',
+  'checked_in': 'true',
+  'event_id': ids
+}
+db.user.insert_one(query)
+print('1 User has been created')
+
+query = {
+  '_id': ids + '#zitun',
+  'first_name': 'Zin',
+  'last_name': 'Tun',
+  'cec_id': 'zitun',
+  'registered': 'true',
+  'checked_in': 'true',
+  'event_id': ids
+}
+db.user.insert_one(query)
+print('1 User has been created')
+
+query = {
+  '_id': ids + '#amandela',
+  'first_name': 'Aruna',
+  'last_name': 'Mandela',
+  'cec_id': 'zitun',
+  'registered': 'true',
+  'checked_in': 'true',
+  'event_id': ids
+}
+db.user.insert_one(query)
+print('1 User has been created')
