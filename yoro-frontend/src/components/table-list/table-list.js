@@ -9,11 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import { subscribeToTimer } from "../../sockets/table-socket/table-socket";
 
 const styles = {
-  tableRow: {
-    "&$hover:hover": {
-      backgroundColor: "blue"
-    }
-  },
   root: {
     width: "100%",
     marginTop: "30px",
@@ -26,7 +21,7 @@ const styles = {
 // http://4fd2bcd1.ngrok.io/yoro/getListOfCheckedIn
 class TableList extends React.Component {
   componentDidMount() {
-    fetch("http://4fd2bcd1.ngrok.io/yoro/getListOfCheckedIn", {
+    fetch("http://localhost:5000/yoro/getListOfCheckedIn", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -42,7 +37,7 @@ class TableList extends React.Component {
   }
   constructor(props) {
     super(props);
-    this.state = { rows: [] };
+    this.state = { rows: [], initialLoad: false };
 
     subscribeToTimer((err, res) => {
       let newRow = this.state.rows;
@@ -55,8 +50,10 @@ class TableList extends React.Component {
           res.registered
         )
       );
+      this.props.callbackFromParent(res);
       this.setState({
-        rows: newRow
+        rows: newRow,
+        initialLoad: true
       });
     });
   }
@@ -80,10 +77,12 @@ class TableList extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.rows.map(row => (
+            {this.state.rows.map((row, index) => (
               <TableRow
                 key={row.cec_id}
-                className={this.props.classes.tableRow}
+                className={
+                  index == 0 && this.state.initialLoad ? "Row-Color" : null
+                }
               >
                 <TableCell component="th" scope="row">
                   {row.cec_id}

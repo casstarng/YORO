@@ -16,8 +16,7 @@ const useStyles = makeStyles({
     height: 440
   }
 });
-
-export default function ProfileDisplay() {
+const ProfileDisplay = props => {
   const classes = useStyles();
 
   return (
@@ -25,12 +24,12 @@ export default function ProfileDisplay() {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={props.person.profile_pic}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Jonathan
+            {props.person.first_name + " " + props.person.last_name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Attendee
@@ -47,4 +46,5 @@ export default function ProfileDisplay() {
       </CardActions>
     </Card>
   );
-}
+};
+export default ProfileDisplay;

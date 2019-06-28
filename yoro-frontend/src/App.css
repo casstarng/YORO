@@ -7,6 +7,20 @@
   height: 40vmin;
   pointer-events: none;
 }
+.Row-Color {
+  color: black;
+  background-color: white;
+  animation: background-fade 5s;
+  animation-duration: 5s;
+}
+@keyframes background-fade {
+  0% {
+    background: #65ff00;
+  }
+  100% {
+    background: white;
+  }
+}
 
 .App-header {
   background-color: #282c34;

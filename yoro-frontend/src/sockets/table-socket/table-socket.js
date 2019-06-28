@@ -1,6 +1,6 @@
 import openSocket from "socket.io-client";
 
-const socket = openSocket("http://4fd2bcd1.ngrok.io/lastCheckIn");
+const socket = openSocket("http://localhost:5000/lastCheckIn");
 function subscribeToTimer(cb) {
   socket.on("lastCheckedInUser", timestamp => {
     console.log(timestamp);
