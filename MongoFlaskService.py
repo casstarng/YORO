@@ -58,13 +58,12 @@ def checkInUser():
 
 @app.route('/yoro/getListOfCheckedIn', methods=['POST'])
 def getListOfCheckedIn():
-    print(str(request.json))
+    print('getListOfCheckedIn is triggered with id', str(request.json['id']))
+
     query = {
         'event_id': request.json['id'],
         'checked_in': 'true'
     }
-
-    print (request.json['id'])
 
     # Query
     cursor = db.user.find(query)
@@ -74,7 +73,6 @@ def getListOfCheckedIn():
     # Return success response
     return jsonify({'code': 'S0',
                     'response': 'Success',
-                    'message': 'User has now been checked in',
                     'result': results}), 201
 
 if __name__ == '__main__':
