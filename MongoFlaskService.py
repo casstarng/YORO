@@ -48,6 +48,7 @@ def checkInUser():
     # Update user info
     db.user.update({'_id': request.json['id']}, {'$set': {'checked_in': 'true'}})
 
+    user['checked_in'] = 'true'
     socketio.emit('lastCheckedInUser', user, namespace='/lastCheckIn')
 
     # Return success response
