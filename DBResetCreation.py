@@ -1,5 +1,4 @@
 import pymongo
-from bson.objectid import ObjectId
 
 client = pymongo.MongoClient("mongodb+srv://catarng:yoro@yoro-5bxmt.mongodb.net/yoro?retryWrites=true&w=majority")
 print('Dropping Database')
@@ -27,7 +26,8 @@ query = {
   'cec_id': 'catarng',
   'registered': 'true',
   'checked_in': 'false',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/catarng.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -39,7 +39,8 @@ query = {
   'cec_id': 'jonathat',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/jonathat.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -51,7 +52,8 @@ query = {
   'cec_id': 'jimpan',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/jimpan.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -63,7 +65,8 @@ query = {
   'cec_id': 'algarbar',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/algarbar.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -75,7 +78,8 @@ query = {
   'cec_id': 'zitun',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/zitun.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -87,7 +91,8 @@ query = {
   'cec_id': 'amandela',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/amandela.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -99,7 +104,8 @@ query = {
   'cec_id': 'harkgrew',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/harkgrew.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')
@@ -111,7 +117,8 @@ query = {
   'cec_id': 'vagaur',
   'registered': 'true',
   'checked_in': 'true',
-  'event_id': ids
+  'event_id': ids,
+  'profile_pic': 'https://wwwin.cisco.com/dir/photo/zoom/vagaur.jpg'
 }
 db.user.insert_one(query)
 print('1 User has been created')

@@ -20,11 +20,15 @@ def latestCheckIn():
 
 @app.route('/yoro/checkInUser', methods=['POST'])
 def checkInUser():
+    print("=====================")
+    print(str(request.json))
     # Check if ticket_id is present in request
     if not request.json or not 'id' in request.json:
         return jsonify({'code': 'F1',
                         'response': 'Fail',
                         'message': 'id is not present in request'}), 201
+
+    print('1) checkInUser with id', str(request.json['id']))
 
     query = {
         '_id': request.json['id']
@@ -46,7 +50,7 @@ def checkInUser():
                         'message': 'User has already been checked in'}), 201
 
     # Update user info
-    db.user.update({'_id': request.json['id']}, {'$set': {'checked_in': 'true'}})
+    # db.user.update({'_id': request.json['id']}, {'$set': {'checked_in': 'true'}})
 
     user['checked_in'] = 'true'
     socketio.emit('lastCheckedInUser', user, namespace='/lastCheckIn')
@@ -59,7 +63,7 @@ def checkInUser():
 
 @app.route('/yoro/getListOfCheckedIn', methods=['POST'])
 def getListOfCheckedIn():
-    print('getListOfCheckedIn is triggered with id', str(request.json['id']))
+    print('2) getListOfCheckedIn is triggered with id', str(request.json['id']))
 
     query = {
         'event_id': request.json['id'],
