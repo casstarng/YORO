@@ -13,15 +13,27 @@ import json
 import logging as log
 import datetime as dt
 from time import sleep
+from flask import Flask, Response, render_template
 
 from Faced.detector import FaceDetector
 from Faced.utils import annotate_image
+
+app = Flask(__name__)
 
 count = 0
 user = "cassidy"
 event_id = "5d1387b338fd21e#"
 url = "http://4fd2bcd1.ngrok.io/yoro/checkInUser"
 user = {"cassidy": "catarng"}
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def crop_images(frame, bboxes):
     global count
@@ -41,7 +53,7 @@ def crop_images(frame, bboxes):
 
     return cropped_images
 
-def main():
+def gen():
     #Initialize the Facial Recognition Neural Network
     face_detector = FaceDetector()
     video_capture = cv2.VideoCapture(0)
@@ -109,24 +121,28 @@ def main():
                 color = (0,255,0)
                 if (name in user):
                     data = {"id": event_id + user[name]}
-                    print("Sent Requests: " + str(data))
+                    # print("Sent Requests: " + str(data))
                     headers = {"Content-Type": "application/json"}
                     r = requests.post(url=url, data=json.dumps(data), headers=headers)
-                    print(r)
+                    # print(r)
 
             cv2.rectangle(frame, (int(x - w/2), int(y - h/2)),
                             (int(x + w/2), int(y + h/2)), color, 3)
 
         # ann_img = annotate_image(frame, bboxes)
         # Display the resulting frame
-        cv2.imshow('Video', frame)
+        # cv2.imshow('Video', frame)
+        # if (count % 50 == 0):
+        #     cv2.imwrite("./yoro-frontend/public/shared/curImage.jpg", frame)
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', frame)[1].tostring() + b'\r\n')
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
 
     # When everything is done, release the capture
     video_capture.release()
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    main()
+    app.run(host='0.0.0.0', debug=True, threaded=True)

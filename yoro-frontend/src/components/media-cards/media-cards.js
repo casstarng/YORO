@@ -21,11 +21,10 @@ export default function ImgMediaCard() {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia
-          component="img"
+       
+        <CardMedia component="img"
           height="530"
-          image="/static/images/cards/contemplative-reptile.jpg"
-        />
+          image={"http://0.0.0.0:5000/video_feed"}/>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
